@@ -11,6 +11,9 @@ namespace Grafi
         public int Id { get; set; }
         public List<Nodo> Connessioni { get; set; }
         public int distanza { get; set; }
+        public int? inizioVisita { get; set; }
+        public int? fineVisita { get; set; }
+        public char? lettera { get; set; }
 
         public enum Colore
         {

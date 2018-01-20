@@ -104,6 +104,19 @@ namespace Grafi
             Console.WriteLine("#############FINE CONTA RAGGIUNGIBILI PARI##########\n\n");
             #endregion
 
+            Console.WriteLine("#############GRAFO CONNESSO##########");
+
+            foreach (var nodo in daUtilizzare)
+            {
+                Console.WriteLine("Nodo #" + nodo.Id + " - Grafo connesso:\t" + nodo.IsConntected(daUtilizzare));
+            }
+            Console.WriteLine("#############FINE GRAFO CONNESSO##########\n\n");
+
+            Console.WriteLine("#############GRAFO ALBERO##########");
+
+            Console.WriteLine("Grafo albero:\t" + Algoritmi.IsTree(daUtilizzare));
+           
+            Console.WriteLine("#############FINE GRAFO ALBERO##########\n\n");
             #region BloccaDEBUG
 
             int k = 0;

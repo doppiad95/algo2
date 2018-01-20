@@ -140,6 +140,21 @@ namespace Grafi
             esaminatiDfs.Add(nodoCorrente);
         }
 
+        public static bool IsTree(List<Nodo> grafoDaControllare)
+        {
+            if (grafoDaControllare != null && grafoDaControllare.FirstOrDefault().IsConntected(grafoDaControllare))
+            {
+                int e=0, v=grafoDaControllare.Count;
+                foreach (var nodo in grafoDaControllare)
+                {
+                    e += nodo.Connessioni.Count;
+                }
+                e /= 2;
+                if (e == (v - 1))
+                    return true;
+            }
+            return false;
+        }
         public static List<Nodo> ResettaNodi(List<Nodo> daResettare)
         {
             esaminatiDfs.Clear();

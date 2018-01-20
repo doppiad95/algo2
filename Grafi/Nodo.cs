@@ -17,10 +17,14 @@ namespace Grafi
 
         public enum Colore
         {
-            White, Grey, Black
+            White,
+            Grey,
+            Black
         }
+
         public int Color { get; set; }
         public Nodo Predecessore { get; set; }
+
         public Nodo(int i)
         {
             Id = i;
@@ -41,6 +45,19 @@ namespace Grafi
             foreach (var r in ritornato)
             {
                 if (r.distanza != -1)
+                    i++;
+            }
+            return i;
+        }
+
+        public int PrintEvenDistance(List<Nodo> grafoDaControllare)
+        {
+            var ritornato = Algoritmi.Bfs(this.Id, grafoDaControllare);
+            ritornato = ritornato.Where(x => x.Id != this.Id).ToList();
+            int i = 0;
+            foreach (var r in ritornato)
+            {
+                if (r.distanza != -1 && r.distanza % 2 == 0)
                     i++;
             }
             return i;

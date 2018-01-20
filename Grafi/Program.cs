@@ -86,12 +86,24 @@ namespace Grafi
 
             #region CountReachable
 
+            Console.WriteLine("#############CONTA RAGGIUNGIBILI##########");
             foreach (var nodo in daUtilizzare)
             {
                 Console.WriteLine("Nodo #"+nodo.Id+" - Nodi raggiungibili:\t"+nodo.CountReachable(daUtilizzare));
             }
-
+            Console.WriteLine("#############FINE CONTA RAGGIUNGIBILI##########\n\n");
             #endregion
+
+            #region CountEvenDistance
+            Console.WriteLine("#############CONTA RAGGIUNGIBILI PARI##########");
+
+            foreach (var nodo in daUtilizzare)
+            {
+                Console.WriteLine("Nodo #" + nodo.Id + " - Nodi pari raggiungibili:\t" + nodo.PrintEvenDistance(daUtilizzare));
+            }
+            Console.WriteLine("#############FINE CONTA RAGGIUNGIBILI PARI##########\n\n");
+            #endregion
+
             #region BloccaDEBUG
 
             int k = 0;

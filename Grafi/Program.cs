@@ -84,6 +84,14 @@ namespace Grafi
 
             #endregion
 
+            #region CountReachable
+
+            foreach (var nodo in daUtilizzare)
+            {
+                Console.WriteLine("Nodo #"+nodo.Id+" - Nodi raggiungibili:\t"+nodo.CountReachable(daUtilizzare));
+            }
+
+            #endregion
             #region BloccaDEBUG
 
             int k = 0;

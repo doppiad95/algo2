@@ -313,6 +313,63 @@ namespace Grafi
             nodo.fineVisita = Time;
         }
 
+        public static int CountConnectedComponents(List<Nodo> grafoDaControllare)
+        {
+            ResettaNodi(grafoDaControllare);
+            int n = 0;
+            foreach (var nodo in grafoDaControllare)
+            {
+                if (nodo.Color == Nodo.Colore.White.GetHashCode())
+                {
+                    n += 1;
+                    DfsVisit(nodo);
+                }
+            }
+            return n;
+        }
+
+        public static void Esercizio11()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool Esercizio12(List<Nodo> grafoDaControllare, int k = 0)
+        {
+            ResettaNodi(grafoDaControllare);
+            if (k == 0)
+                return true;
+            if(IsAcyclicNo(grafoDaControllare))
+                if (CountConnectedComponents(grafoDaControllare) > k)
+                    return true;
+            return false;
+        }
+
+        public static int EvenConnectedComponent(List<Nodo> grafoDaControllare)
+        {
+            int ecc = 0;
+            ResettaNodi(grafoDaControllare);
+            foreach (var nodo in grafoDaControllare)
+            {
+                if(nodo.Color == Nodo.Colore.White.GetHashCode())
+                    if (DfsCountVisit(nodo) % 2 == 0)
+                        ecc++;
+            }
+            return ecc;
+        }
+
+        private static int DfsCountVisit(Nodo nodo)
+        {
+            nodo.Color = Nodo.Colore.Grey.GetHashCode();
+            int count = 0;
+            foreach (var nodo1 in nodo.Connessioni)
+            {
+                if (nodo1.Color == Nodo.Colore.White.GetHashCode())
+                    count += DfsCountVisit(nodo1);
+            }
+            nodo.Color = Nodo.Colore.Black.GetHashCode();
+            return ++count;
+        }
+
         public static List<Nodo> ResettaNodi(List<Nodo> daResettare)
         {
             esaminatiDfs.Clear();

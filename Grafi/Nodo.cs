@@ -62,5 +62,17 @@ namespace Grafi
             }
             return i;
         }
+        public bool IsConntected(List<Nodo> grafoDaControllare)
+        {
+            var ritornato = Algoritmi.Bfs(this.Id, grafoDaControllare);
+            ritornato = ritornato.Where(x => x.Id != this.Id).ToList();
+            foreach (var nodo in ritornato)
+            {
+                if (nodo.distanza == -1)
+                    return false;
+            }
+            return true;
+        }
     }
+    
 }

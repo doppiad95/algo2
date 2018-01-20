@@ -232,6 +232,87 @@ namespace Grafi
             }
             return false;
         }
+        private static bool _acyclic = true;
+        public static bool IsAcyclic(List<Nodo> grafoDaControllare)
+        {
+            _acyclic = true;
+            foreach (var nodo in grafoDaControllare)
+            {
+                nodo.Color = Nodo.Colore.White.GetHashCode();
+            }
+            Time = 0;
+            
+            foreach (var nodo in grafoDaControllare)
+            {
+                if(nodo.Color == Nodo.Colore.White.GetHashCode())
+                    IsAcyclicVisit(nodo);
+            }
+            return _acyclic;
+        }
+        public static void IsAcyclicVisit(Nodo nodo)
+        {
+            nodo.Color = Nodo.Colore.Grey.GetHashCode();
+            Time += 1;
+            nodo.distanza = Time;
+            nodo.inizioVisita = Time;
+            foreach (var nodo1 in nodo.Connessioni)
+            {
+                if (nodo1.Color == Nodo.Colore.White.GetHashCode())
+                {
+                    nodo1.Predecessore = nodo;
+                    IsAcyclicVisit(nodo1);
+                }
+                else
+                {
+                    if (nodo1.Color == Nodo.Colore.Grey.GetHashCode() && _acyclic)
+                        _acyclic = false;
+                }
+            }
+            nodo.Color = Nodo.Colore.Black.GetHashCode();
+            Time += 1;
+            nodo.fineVisita = Time;
+        }
+
+        public static bool IsAcyclicNo(List<Nodo> grafoDaControllare)
+        {
+            _acyclic = true;
+            foreach (var nodo in grafoDaControllare)
+            {
+                nodo.Color = Nodo.Colore.White.GetHashCode();
+            }
+            Time = 0;
+
+            foreach (var nodo in grafoDaControllare)
+            {
+                if (nodo.Color == Nodo.Colore.White.GetHashCode())
+                    IsAcyclicVisitNo(nodo);
+            }
+            return _acyclic;
+        }
+        public static void IsAcyclicVisitNo(Nodo nodo)
+        {
+            nodo.Color = Nodo.Colore.Grey.GetHashCode();
+            Time += 1;
+            nodo.distanza = Time;
+            nodo.inizioVisita = Time;
+            foreach (var nodo1 in nodo.Connessioni.Where(x => x.Predecessore != null && nodo.Predecessore != null && x.Predecessore != nodo.Predecessore))
+            {
+                if (nodo1.Color == Nodo.Colore.White.GetHashCode())
+                {
+                    nodo1.Predecessore = nodo;
+                    IsAcyclicVisitNo(nodo1);
+                }
+                else
+                {
+                    if (nodo1.Color == Nodo.Colore.Grey.GetHashCode() && _acyclic)
+                        _acyclic = false;
+                }
+            }
+            nodo.Color = Nodo.Colore.Black.GetHashCode();
+            Time += 1;
+            nodo.fineVisita = Time;
+        }
+
         public static List<Nodo> ResettaNodi(List<Nodo> daResettare)
         {
             esaminatiDfs.Clear();

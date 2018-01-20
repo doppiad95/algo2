@@ -181,6 +181,42 @@ namespace Grafi
             nodo.fineVisita = Time;
         }
 
+        public static void PrintEdgeTypeNo(List<Nodo> grafoDaControllare)
+        {
+            grafoDaControllare = ResettaNodi(grafoDaControllare);
+            foreach (var nodo in grafoDaControllare)
+            {
+                if (nodo.Color == Nodo.Colore.White.GetHashCode())
+                    PrintEdgeTypeVisitNo(nodo);
+            }
+        }
+
+        private static void PrintEdgeTypeVisitNo(Nodo nodo)
+        {
+            nodo.Color = Nodo.Colore.Grey.GetHashCode();
+            Time += 1;
+            nodo.distanza = Time;
+            nodo.inizioVisita = Time;
+            foreach (var nodo1 in nodo.Connessioni.Where(x => x.Predecessore != null && nodo.Predecessore != null && x.Predecessore != nodo.Predecessore))
+            {
+                if (nodo1.Color == Nodo.Colore.White.GetHashCode())
+                {
+                    Console.WriteLine("(" + nodo.Id + "," + nodo1.Id + ") Arco dell'albero");
+                    nodo1.Predecessore = nodo;
+                    PrintEdgeTypeVisit(nodo1);
+                }
+                else
+                {
+                    Console.WriteLine("(" + nodo.Id + "," + nodo1.Id + ") Arco all'indietro");
+                }
+                
+            }
+            nodo.Color = Nodo.Colore.Black.GetHashCode();
+            Time += 1;
+            nodo.fineVisita = Time;
+        }
+
+
         public static bool IsTree(List<Nodo> grafoDaControllare)
         {
             if (grafoDaControllare != null && grafoDaControllare.FirstOrDefault().IsConntected(grafoDaControllare))

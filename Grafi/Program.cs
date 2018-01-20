@@ -119,6 +119,7 @@ namespace Grafi
             Console.WriteLine("#############FINE GRAFO ALBERO##########\n\n");
             #region BloccaDEBUG
 
+            Algoritmi.PrintEdgeType(daUtilizzare);
             int k = 0;
             k++;
 

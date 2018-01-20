@@ -140,6 +140,47 @@ namespace Grafi
             esaminatiDfs.Add(nodoCorrente);
         }
 
+        public static void PrintEdgeType(List<Nodo> grafoDaControllare)
+        {
+            grafoDaControllare = ResettaNodi(grafoDaControllare);
+            foreach (var nodo in grafoDaControllare)
+            {
+                if(nodo.Color == Nodo.Colore.White.GetHashCode())
+                    PrintEdgeTypeVisit(nodo);
+            }
+        }
+
+        private static void PrintEdgeTypeVisit(Nodo nodo)
+        {
+            nodo.Color = Nodo.Colore.Grey.GetHashCode();
+            Time += 1;
+            nodo.distanza = Time;
+            nodo.inizioVisita = Time;
+            foreach (var nodo1 in nodo.Connessioni)
+            {
+                if (nodo1.Color == Nodo.Colore.White.GetHashCode())
+                {
+                    Console.WriteLine("("+nodo.Id+","+nodo1.Id+") Arco dell'albero");
+                    nodo1.Predecessore = nodo;
+                    PrintEdgeTypeVisit(nodo1);
+                }
+                else if (nodo1.Color == Nodo.Colore.Grey.GetHashCode())
+                {
+                    Console.WriteLine("(" + nodo.Id + "," + nodo1.Id + ") Arco all'indietro");
+                }
+                else
+                {
+                    if(nodo.distanza<nodo1.distanza)
+                        Console.WriteLine("(" + nodo.Id + "," + nodo1.Id + ") Arco in avanti");
+                    else
+                        Console.WriteLine("(" + nodo.Id + "," + nodo1.Id + ") Arco di attraversamento");
+                }
+            }
+            nodo.Color = Nodo.Colore.Black.GetHashCode();
+            Time += 1;
+            nodo.fineVisita = Time;
+        }
+
         public static bool IsTree(List<Nodo> grafoDaControllare)
         {
             if (grafoDaControllare != null && grafoDaControllare.FirstOrDefault().IsConntected(grafoDaControllare))
@@ -164,6 +205,7 @@ namespace Grafi
                 r.distanza = 0;
                 r.Predecessore = null;
             }
+            Time = 0;
             return daResettare;
         }
     }
